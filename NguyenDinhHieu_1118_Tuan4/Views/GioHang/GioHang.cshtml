@@ -1,0 +1,93 @@
+﻿@model IEnumerable<NguyenDinhHieu_1118_Tuan4.Models.GioHang>
+
+@{
+    ViewBag.Title = "GioHang";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>GioHang</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            <b>Mã sách</b>
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tensach)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.hinh)
+
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.giaban)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.isoluong)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.dthanhtien)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.masach)
+            </td>
+            @using (Html.BeginForm("CapNhatGioHang", "GioHang", new { @id = item.masach }))
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.tensach)
+                </td>
+                <td>
+                    @*@Html.DisplayFor(modelItem => item.hinh)*@
+                    <img src="@Html.DisplayFor(modelItem => item.hinh)" alt="" width="200px" height="300px">
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.giaban)
+                </td>
+                <td>
+                    <input type="number" name="txtSoLg" min="1" value="@Html.DisplayFor(modelItem => item.isoluong)" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.dthanhtien)
+                </td>
+                <td>
+                    <a href=" @Url.Action("XoaGioHang", "GioHang", new { @id = item.masach, @strURL = Request.Url.ToString() })">Xóa</a> |
+                    @*@Html.ActionLink("Detail", "Sach", new { id = item.masach })*@
+                    <a href=" @Url.Action("Detail", "Sach" , new { id = item.masach })">Chi tiết</a>
+                    @*.Action("XoaGioHang", "GioHang", new { @id = item.masach, @strURL = Request.Url.ToString() })*@
+                    <input type="submit" value="Cập nhật" class="btn btn-success" />
+                    @*<a class="btn btn-success" href="@Url.Action("CapNhatGioHang", "GioHang",
+                new { @id = item.masach, @strURL = Request.Url.ToString() })">Cập nhật</a>*@
+
+                </td>
+            }
+
+
+        </tr>
+    }
+
+    <tr style="font-weight:bold; text-align:left; color:red">
+        <td colspan="2"> Số loại sách: @ViewBag.Tongsoluongsanpham </td>
+        <td colspan="2"> Số lượng sách: @ViewBag.Tongsoluong </td>
+        <td colspan="4"> Tổng tiền: @String.Format("{0:0,0}", @ViewBag.Tongtien) VNĐ </td>
+    </tr>
+    <tr style="font-weight:bold; color: blue; text-align:right">
+        <td colspan="5">
+            @Html.ActionLink("Xóa giỏ hàng", "XoaTatCaGioHang")
+        </td>
+    </tr>
+    <tr style="font-weight:bold; color: yellow; text-align: right;">
+        <td colspan="5" >
+            @Html.ActionLink("Đặt hàng","DatHang", "GioHang")
+        </td>
+    </tr>
+</table>
+    
